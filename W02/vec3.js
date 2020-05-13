@@ -1,4 +1,11 @@
 class Vec3 {
+    //constructor
+    constructor(x, y, z){
+        this.x = x;
+        this.y = y;
+        this.z = z;
+    }
+
     // Add method
     add = function (v) {
         this.x += v.x;
