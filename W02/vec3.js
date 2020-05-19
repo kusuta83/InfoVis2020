@@ -20,7 +20,8 @@ class Vec3 {
     }
 
     min = function (v) {
-
+        const m = this.x = this.x < this.y ? this.x : this.y;
+        return m < this. z ? m : this.z;
     }
 
     mid = function (v) {
