@@ -1,0 +1,21 @@
+<html>
+
+<head>
+    <title>W04: Example 02</title>
+</head>
+
+<body>
+    <script src="three.js"></script>
+    <script src="main.js"></script>
+    <script>
+        main();
+        var light = new THREE.PointLight(0xffffff);
+        light.position.set(1, 1, 1);
+        scene.add(light);
+        var material = new THREE.MeshLambertMaterial({
+            color: 0xffffff
+        });
+    </script>
+</body>
+
+</html>
