@@ -98,10 +98,11 @@ function main() {
     }
 
     function mouse_down_event(event) { // Mouse picking
-
+        // clicked point in win coord
         var x_win = event.clientX;
         var y_win = event.clientY;
 
+        // window coord to NDC
         var vx = renderer.domElement.offsetLeft;
         var vy = renderer.domElement.offsetTop;
         var vw = renderer.domElement.width;
@@ -109,11 +110,26 @@ function main() {
         var x_NDC = 2 * (x_win - vx) / vw - 1;
         var y_NDC = -(2 * (y_win - vy) / vh - 1);
 
+        // NDC to world coord
         var p_NDC = new THREE.Vector3(x_NDC, y_NDC, 1);
         var p_wld = p_NDC.unproject(camera);
 
+        // origin and direction fo the ray
         var origin = p_wld;
-        var direction = new THREE.Vector3(0, 0, -1);
+
+        x_win = 0;
+        y_win = 0;
+
+        vx = renderer.domElement.offsetLeft;
+        vy = renderer.domElement.offsetTop;
+        vw = renderer.domElement.width;
+        vh = renderer.domElement.height;
+        x_NDC = 2 * (x_win - vx) / vw - 1;
+        y_NDC = -(2 * (y_win - vy) / vh - 1);
+
+        p_NDC = new THREE.Vector3(x_NDC, y_NDC, 1);
+        p_wld = p_NDC.unproject(camera);
+        var direction = p_wld;
 
         var raycaster = new THREE.Raycaster(origin, direction);
         var intersects = raycaster.intersectObject(triangle);
