@@ -75,7 +75,7 @@ function main()
     f.forEach(function(face){
         geometry.faces.push( face );
     })
-    //geometry.faces.push( f0 );
+    geometry.faces.push( f0 );
 
     //    var material = new THREE.MeshBasicMaterial();
     var material = new THREE.MeshLambertMaterial();
