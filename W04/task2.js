@@ -116,20 +116,7 @@ function main() {
 
         // origin and direction fo the ray
         var origin = p_wld;
-
-        x_win = 0;
-        y_win = 0;
-
-        vx = renderer.domElement.offsetLeft;
-        vy = renderer.domElement.offsetTop;
-        vw = renderer.domElement.width;
-        vh = renderer.domElement.height;
-        x_NDC = 2 * (x_win - vx) / vw - 1;
-        y_NDC = -(2 * (y_win - vy) / vh - 1);
-
-        p_NDC = new THREE.Vector3(x_NDC, y_NDC, 1);
-        p_wld = p_NDC.unproject(camera);
-        var direction = p_wld;
+        var direction = new THREE.Vector3(0, 0, -1).unproject(camera);
 
         var raycaster = new THREE.Raycaster(origin, direction);
         var intersects = raycaster.intersectObject(triangle);
