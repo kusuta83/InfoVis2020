@@ -40,7 +40,11 @@ function main()
         [7, 6, 5], //f4
         [7, 5, 4],
         [4, 5, 1],
-        [4, 1, 0] //f7
+        [4, 1, 0], //f7
+        [4, 0, 3],
+        [4, 3, 7],
+        [1, 5, 6],
+        [1, 6, 2] //f11
     ];
 
     var v0 = new THREE.Vector3().fromArray( vertices[0] );
@@ -53,7 +57,7 @@ function main()
     var v7 = new THREE.Vector3().fromArray( vertices[7] );
     
     var f = [];
-    for(var i = 0; i < 8; i++){
+    for(var i = 0; i < 12; i++){
         var id = faces[i];
         f.push( new THREE.Face3( id[0], id[1], id[2] ));
     }
