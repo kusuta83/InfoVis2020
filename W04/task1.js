@@ -28,19 +28,19 @@ function main()
         [1, 1, 0] //v3
         [ -1,  1, -1 ], // v4
         [ -1, -1, -1 ], // v5
-        [  1, -1, -1 ]  // v6
+        [  1, -1, -1 ],  // v6
         [1, 1, -1] //v7
     ];
 
     var faces = [
-        [ 0, 1, 2 ] // f0
-        [0, 2, 3] //f1
-        [3, 2, 6]
-        [3, 6, 7]
-        [7, 6, 5] //f4
-        [7, 5, 4]
-        [4, 5, 1]
-        [4, 1, 0] //f7
+        [ 0, 1, 2 ], // f0
+        [0, 2, 3], //f1
+        [3, 2, 6],
+        [3, 6, 7],
+        [7, 6, 5], //f4
+        [7, 5, 4],
+        [4, 5, 1],
+        [4, 1, 0], //f7
     ];
 
     var v0 = new THREE.Vector3().fromArray( vertices[0] );
@@ -52,15 +52,15 @@ function main()
     var v6 = new THREE.Vector3().fromArray( vertices[6] );
     var v7 = new THREE.Vector3().fromArray( vertices[7] );
     
-    // var f = [];
-    // for(var i = 0; i < 8; i++){
-    //     var id = faces[i];
-    //     f.add( new THREE.Face3( id[0], id[1], id[2] ));
-    // }
-    var id = faces[0];
-    var f0 = new THREE.Face3( id[0], id[1], id[2] );
-    id = faces[1];
-    var f1 = new THREE.Face3( id[0], id[1], id[2] );
+    var f = [];
+    for(var i = 0; i < 8; i++){
+        var id = faces[i];
+        f.add( new THREE.Face3( id[0], id[1], id[2] ));
+    }
+    // var id = faces[0];
+    // var f0 = new THREE.Face3( id[0], id[1], id[2] );
+    // id = faces[1];
+    // var f1 = new THREE.Face3( id[0], id[1], id[2] );
 
     var geometry = new THREE.Geometry();
     geometry.vertices.push( v0 );
@@ -72,11 +72,11 @@ function main()
     geometry.vertices.push( v6 );
     geometry.vertices.push( v7 );
 
-    // f.forEach(function(face){
-    //     geometry.faces.push( face );
-    // })
-    geometry.faces.push( f0 );
-    geometry.faces.push(f1);
+    f.forEach(function(face){
+        geometry.faces.push( face );
+    })
+    // geometry.faces.push( f0 );
+    // geometry.faces.push(f1);
 
     //    var material = new THREE.MeshBasicMaterial();
     var material = new THREE.MeshLambertMaterial();
