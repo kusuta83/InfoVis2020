@@ -112,8 +112,8 @@ function main() {
         var p_NDC = new THREE.Vector3(x_NDC, y_NDC, 1);
         var p_wld = p_NDC.unproject(camera);
 
-        var origin = p_NDC;
-        var direction = p_wld;
+        var origin = p_wld;
+        var direction = new THREE.Vector3(0, 0, -1);
 
         var raycaster = new THREE.Raycaster(origin, direction);
         var intersects = raycaster.intersectObject(triangle);
