@@ -42,11 +42,11 @@ function main() {
     });
 
     var torus_knot1 = new THREE.Mesh(geometry1, material1);
-    torus_knot1.position.set(-250, 0, 0);
+    torus_knot1.position.set(0, 0, 0);
     scene.add(torus_knot1);
 
     var torus_knot2 = new THREE.Mesh(geometry2, material2);
-    torus_knot2.position.set(250, 0, 0);
+    // torus_knot2.position.set(250, 0, 0);
     scene.add(torus_knot2)
 
     loop();
