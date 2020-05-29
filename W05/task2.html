@@ -41,7 +41,8 @@
 		float Ia = ka;
 		float Id = kd * dd;
 		float Is = ks * ds;
-		return C * ( Ia + Id + Is );
+		return C * (Ia + Id);
+		// return C * ( Ia + Id + Is );
 		}
 
 		vec3 LambertianReflection( vec3 C, vec3 L, vec3 N )
