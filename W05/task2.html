@@ -43,6 +43,17 @@
 		float Is = ks * ds;
 		return C * ( Ia + Id + Is );
 		}
+
+		vec3 LambertianReflection( vec3 C, vec3 L, vec3 N )
+        {
+            float ka = 0.4;
+            float kd = 0.6;
+
+            float dd = max( dot( N, L ), 0.0 );
+            float Ia = ka;
+            float Id = kd * dd;
+            return C * ( Ia + Id );
+        }
     
         void main()
 	    {
@@ -50,7 +61,8 @@
 			vec3 L = normalize( light_position - point_position.xyz );
 			vec3 N = normalize( normal_vector );
 
-			vec3 shaded_color = PhongReflection( C, L, N );
+			vec3 shaded_color = LambertianReflection( C, L, N );
+			// vec3 shaded_color = PhongReflection( C, L, N );
 			gl_FragColor = vec4( shaded_color, 1.0 );
 	    }
 	</script>
