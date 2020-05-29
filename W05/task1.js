@@ -36,7 +36,8 @@ function main() {
         vertexShader: document.getElementById('gouraud_p.vert').text,
         fragmentShader: document.getElementById('gouraud.frag').text,
         uniforms: {
-            light_position: { type: 'v3', value: light.position }
+            light_position: { type: 'v3', value: light.position },
+            camera_position: { type: 'v3', value: camera.position}
         }
     });
 
@@ -50,8 +51,10 @@ function main() {
 
     function loop() {
         requestAnimationFrame(loop);
-        torus_knot.rotation.x += 0.01;
-        torus_knot.rotation.y += 0.01;
+        torus_knot1.rotation.x += 0.01;
+        torus_knot1.rotation.y += 0.01;
+        torus_knot2.rotation.x += 0.01;
+        torus_knot2.rotation.y += 0.01;
         renderer.render(scene, camera);
     }
 }
