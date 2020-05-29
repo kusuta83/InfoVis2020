@@ -33,7 +33,7 @@ function main() {
     var geometry2 = new THREE.TorusKnotGeometry(1, 0.3, 100, 20);
     var material2 = new THREE.ShaderMaterial({
         vertexColors: THREE.VertexColors,
-        vertexShader: document.getElementById('gouraudp_p.vert').text,
+        vertexShader: document.getElementById('gouraud_p.vert').text,
         fragmentShader: document.getElementById('gouraud.frag').text,
         uniforms: {
             light_position: { type: 'v3', value: light.position }
