@@ -41,8 +41,13 @@ function main() {
         }
     });
 
-    var torus_knot1 = new THREE.Mesh(geometry, material);
+    var torus_knot1 = new THREE.Mesh(geometry, material1);
+    torus_knot1.position.set(-2, 0, 0);
     scene.add(torus_knot1);
+
+    var torus_knot2 = new THREE.Mesh(geometry, material2);
+    torus_knot2.position.set(2, 0, 0);
+    scene.add(torus_knot2);
 
     loop();
 
@@ -50,6 +55,8 @@ function main() {
         requestAnimationFrame(loop);
         torus_knot1.rotation.x += 0.01;
         torus_knot1.rotation.y += 0.01;
+        torus_knot2.rotation.x += 0.01;
+        torus_knot2.rotation.y += 0.01;
         renderer.render(scene, camera);
     }
 }
