@@ -22,24 +22,34 @@ function main() {
 
     var geometry = new THREE.TorusKnotGeometry(1, 0.3, 100, 20);
     //var material = new THREE.MeshLambertMaterial();
-    var material = new THREE.ShaderMaterial({
+    var material1 = new THREE.ShaderMaterial({
         vertexColors: THREE.VertexColors,
         vertexShader: document.getElementById('phong.vert').text,
-        fragmentShader: document.getElementById('phong.frag').text,
+        fragmentShader: document.getElementById('phong_l.frag').text,
         uniforms: {
             light_position: { type: 'v3', value: light.position }
         }
     });
 
-    var torus_knot = new THREE.Mesh(geometry, material);
-    scene.add(torus_knot);
+    var material2 = new THREE.ShaderMaterial({
+        vertexColors: THREE.VertexColors,
+        vertexShader: document.getElementById('phong.vert').text,
+        fragmentShader: document.getElementById('phong_p.frag').text,
+        uniforms: {
+            light_position: { type: 'v3', value: light.position },
+            camera_position: { type: 'v3', value: camera.position }
+        }
+    });
+
+    var torus_knot1 = new THREE.Mesh(geometry, material);
+    scene.add(torus_knot1);
 
     loop();
 
     function loop() {
         requestAnimationFrame(loop);
-        torus_knot.rotation.x += 0.01;
-        torus_knot.rotation.y += 0.01;
+        torus_knot1.rotation.x += 0.01;
+        torus_knot1.rotation.y += 0.01;
         renderer.render(scene, camera);
     }
 }
