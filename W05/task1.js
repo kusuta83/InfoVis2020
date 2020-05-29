@@ -20,18 +20,31 @@ function main() {
     renderer.setSize(width, height);
     document.body.appendChild(renderer.domElement);
 
-    var geometry = new THREE.TorusKnotGeometry(1, 0.3, 100, 20);
-    var material = new THREE.ShaderMaterial({
+    var geometry1 = new THREE.TorusKnotGeometry(1, 0.3, 100, 20);
+    var material1 = new THREE.ShaderMaterial({
         vertexColors: THREE.VertexColors,
-        vertexShader: document.getElementById('gouraud.vert').text,
+        vertexShader: document.getElementById('gouraud_l.vert').text,
         fragmentShader: document.getElementById('gouraud.frag').text,
         uniforms: {
             light_position: { type: 'v3', value: light.position }
         }
     });
 
-    var torus_knot = new THREE.Mesh(geometry, material);
-    scene.add(torus_knot);
+    var geometry2 = new THREE.TorusKnotGeometry(1, 0.3, 100, 20);
+    var material2 = new THREE.ShaderMaterial({
+        vertexColors: THREE.VertexColors,
+        vertexShader: document.getElementById('gouraudp_p.vert').text,
+        fragmentShader: document.getElementById('gouraud.frag').text,
+        uniforms: {
+            light_position: { type: 'v3', value: light.position }
+        }
+    });
+
+    var torus_knot1 = new THREE.Mesh(geometry1, material1);
+    scene.add(torus_knot1);
+
+    var torus_knot2 = new THREE.Mesh(geometry2, material2);
+    scene.add(torus_knot2)
 
     loop();
 
