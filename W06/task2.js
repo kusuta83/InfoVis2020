@@ -46,7 +46,8 @@ function main()
         var G = 0.0;
         var B = 0.0;
         var color = new THREE.Color( R, G, B );
-        cmap.push( [ S, '0x' + color.getHexString() ] );
+        var newColor = new THREE.Color.addColors(color, new THREE.Color('white'));
+        cmap.push( [ S, '0x' + newColor.getHexString() ] );
     }
 
     // Draw color map
