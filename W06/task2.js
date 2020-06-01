@@ -43,8 +43,8 @@ function main()
     {
         var S = i / 255.0; // [0,1]
         var R = 1.0;
-        var G = Math.max( Math.cos( S * Math.PI ), 0.0 );
-        var B = Math.max( Math.cos( S * Math.PI ), 0.0 );
+        var G = Math.max( 1.0 - S, 0.0 );
+        var B = Math.max( 1.0 - S, 0.0 );
         var color = new THREE.Color( R, G, B );
         cmap.push( [ S, '0x' + color.getHexString() ] );
     }
