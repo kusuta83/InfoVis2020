@@ -43,11 +43,10 @@ function main()
     {
         var S = i / 255.0; // [0,1]
         var R = Math.max( Math.cos( ( S - 1.0 ) * Math.PI ), 0.0 );
-        var G = 0.0;
-        var B = 0.0;
+        var G = Math.max( Math.cos( S * Math.PI ), 0.0 );
+        var B = Math.max( Math.cos( S * Math.PI ), 0.0 );
         var color = new THREE.Color( R, G, B );
-        var newColor = new THREE.Color.addColors(color, new THREE.Color('white'));
-        cmap.push( [ S, '0x' + newColor.getHexString() ] );
+        cmap.push( [ S, '0x' + color.getHexString() ] );
     }
 
     // Draw color map
