@@ -1,5 +1,6 @@
 function Isosurfaces(volume, isovalue, screen) {
-
+    screen.camera.position.set(0, 0, 5);
+    screen.light.position.copy(screen.camera_position);
 
     var geometry = new THREE.Geometry();
     var material = new THREE.MeshLambertMaterial({
@@ -8,7 +9,7 @@ function Isosurfaces(volume, isovalue, screen) {
         fragmentShader: document.getElementById('phong.frag').text,
         uniforms: {
             light_position: { type: 'v3', value: screen.camera.position},
-            camera_position: { type: 'v3', value: screen.camera.position }
+            camera_position: { type: 'v3', value: screen.light.position }
         }
     });
 
