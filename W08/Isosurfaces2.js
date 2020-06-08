@@ -47,9 +47,16 @@ function Isosurfaces(volume, isovalue) {
                     var v4 = new THREE.Vector3(x + vid4[0], y + vid4[1], z + vid4[2]);
                     var v5 = new THREE.Vector3(x + vid5[0], y + vid5[1], z + vid5[2]);
 
-                    var v01 = interpolated_vertex(v0, v1, isovalue);
-                    var v23 = interpolated_vertex(v2, v3, isovalue);
-                    var v45 = interpolated_vertex(v4, v5, isovalue);
+                    var s0 = volume.values[vid0][0];
+                    var s1 = volume.values[vid1][0];
+                    var s2 = volume.values[vid2][0];
+                    var s3 = volume.values[vid3][0];
+                    var s4 = volume.values[vid4][0];
+                    var s5 = volume.values[vid5][0];
+
+                    var v01 = interpolated_vertex(v0, v1, s0, s1);
+                    var v23 = interpolated_vertex(v2, v3, s2, s3);
+                    var v45 = interpolated_vertex(v4, v5, s4, s5);
 
                     geometry.vertices.push(v01);
                     geometry.vertices.push(v23);
