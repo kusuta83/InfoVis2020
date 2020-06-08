@@ -1,6 +1,6 @@
 function Isosurfaces(volume, isovalue, screen) {
     screen.camera.position.set(0, 0, 5);
-    screen.light.position.copy(screen.camera_position);
+    screen.light.position.set(0, 0, 5);
 
     var geometry = new THREE.Geometry();
     var material = new THREE.MeshLambertMaterial({
