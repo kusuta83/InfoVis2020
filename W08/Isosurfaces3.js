@@ -1,11 +1,14 @@
 function Isosurfaces(volume, isovalue) {
+
+
     var geometry = new THREE.Geometry();
     var material = new THREE.MeshLambertMaterial({
         vertexColors: THREE.VertexColors,
         vertexShader: document.getElementById('phong.vert').text,
         fragmentShader: document.getElementById('phong.frag').text,
         uniforms: {
-            light_position: { type: 'v3', value: light.position },
+            // light_position: { type: 'v3', value: light.position },
+            light_position: { type: 'v3', value: screen.camera.position},
             camera_position: { type: 'v3', value: camera.position }
         }
     });
