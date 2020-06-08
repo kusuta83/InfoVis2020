@@ -1,19 +1,4 @@
 function Isosurfaces(volume, isovalue, screen) {
-    var geometry = new THREE.Geometry();
-    var material = new THREE.ShaderMaterial({
-        vertexColors: new THREE.Color().setHex( cmap[ scalarsToIndex(isovalue) ][1] ),
-        vertexShader: document.getElementById('phong.vert').text,
-        fragmentShader: document.getElementById('phong.frag').text,
-        uniforms: {
-            light_position: { type: 'v3', value: screen.camera.position},
-            camera_position: { type: 'v3', value: screen.light.position }
-        }
-    });
-
-    var smin = volume.min_value;
-    var smax = volume.max_value;
-    isovalue = KVS.Clamp(isovalue, smin, smax);
-
     // Create color map
     var cmap = [];
     for (var i = 0; i < 256; i++) {
@@ -24,6 +9,21 @@ function Isosurfaces(volume, isovalue, screen) {
         var color = new THREE.Color(R, G, B);
         cmap.push([S, '0x' + color.getHexString()]);
     }
+
+    var geometry = new THREE.Geometry();
+    var material = new THREE.ShaderMaterial({
+        vertexColors: new THREE.Color().setHex(cmap[scalarsToIndex(isovalue)][1]),
+        vertexShader: document.getElementById('phong.vert').text,
+        fragmentShader: document.getElementById('phong.frag').text,
+        uniforms: {
+            light_position: { type: 'v3', value: screen.camera.position },
+            camera_position: { type: 'v3', value: screen.light.position }
+        }
+    });
+
+    var smin = volume.min_value;
+    var smax = volume.max_value;
+    isovalue = KVS.Clamp(isovalue, smin, smax);
 
     var lut = new KVS.MarchingCubesTable();
     var cell_index = 0;
@@ -84,14 +84,14 @@ function Isosurfaces(volume, isovalue, screen) {
 
     geometry.computeVertexNormals();
 
-    material.color = new THREE.Color().setHex( cmap[ scalarsToIndex(isovalue) ][1] );
+    material.color = new THREE.Color().setHex(cmap[scalarsToIndex(isovalue)][1]);
 
     return new THREE.Mesh(geometry, material);
 
-    function scalarsToIndex(s){
+    function scalarsToIndex(s) {
         var scalarsMin = volume.min_value;
         var scalarsMax = volume.max_value;
-        var newS = (s-scalarsMin) * (255/(scalarsMax-scalarsMin));
+        var newS = (s - scalarsMin) * (255 / (scalarsMax - scalarsMin));
         return Math.round(newS);
     }
 
@@ -147,7 +147,7 @@ function Isosurfaces(volume, isovalue, screen) {
         // var w0 = v0.multiplyScalar(s1 - isovalue);
         // var w1 = v1.multiplyScalar(isovalue - s0);
         // return new THREE.Vector3().addVectors(w0, w1).divideScalar(s1 - s0);
-        
+
         var dis01 = v0.distanceToSquared(v1);
         var dis0i = dis01 * (isovalue - s0) / (s1 - s0);
         var v01 = v1.sub(v0);
