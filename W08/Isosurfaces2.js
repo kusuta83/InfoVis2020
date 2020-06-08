@@ -136,14 +136,15 @@ function Isosurfaces(volume, isovalue) {
         var id1 = v1.x + (v1.y * lines) + (v1.z * slices);
         var s1 = volume.values[id1][0];
 
-        var w0 = v0.multiplyScalar(s1 - isovalue);
-        var w1 = v1.multiplyScalar(isovalue - s0);
-        return new THREE.Vector3().addVectors(w0, w1).divideScalar(s1 - s0);
-        // var dis01 = v0.distanceToSquared(v1);
-        // var dis0i = dis01 * (isovalue - s0) / (s1 - s0);
-        // var v01 = v1.sub(v0);
-        // var v0i = v01.multiplyScalar(dis0i / dis01);
-        // var vi = new THREE.Vector3().addVectors(v0, v0i);
-        // return vi;
+        // var w0 = v0.multiplyScalar(s1 - isovalue);
+        // var w1 = v1.multiplyScalar(isovalue - s0);
+        // return new THREE.Vector3().addVectors(w0, w1).divideScalar(s1 - s0);
+        
+        var dis01 = v0.distanceToSquared(v1);
+        var dis0i = dis01 * (isovalue - s0) / (s1 - s0);
+        var v01 = v1.sub(v0);
+        var v0i = v01.multiplyScalar(dis0i / dis01);
+        var vi = new THREE.Vector3().addVectors(v0, v0i);
+        return vi;
     }
 }
