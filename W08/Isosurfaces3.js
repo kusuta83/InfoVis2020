@@ -1,7 +1,7 @@
 function Isosurfaces(volume, isovalue, screen) {
     var geometry = new THREE.Geometry();
     var material = new THREE.ShaderMaterial({
-        vertexColors: THREE.VertexColors,
+        vertexColors: new THREE.Color().setHex( cmap[ scalarsToIndex(isovalue) ][1] ),
         vertexShader: document.getElementById('phong.vert').text,
         fragmentShader: document.getElementById('phong.frag').text,
         uniforms: {
