@@ -1,4 +1,4 @@
-function Isosurfaces(volume, isovalue) {
+function Isosurfaces(volume, isovalue, screen) {
     var geometry = new THREE.Geometry();
     var material = new THREE.ShaderMaterial({
         vertexColors: THREE.VertexColors,
