@@ -8,7 +8,7 @@ function Isosurfaces(volume, isovalue) {
         fragmentShader: document.getElementById('phong.frag').text,
         uniforms: {
             light_position: { type: 'v3', value: screen.camera.position},
-            camera_position: { type: 'v3', value: camera.position }
+            camera_position: { type: 'v3', value: screen.camera.position }
         }
     });
 
