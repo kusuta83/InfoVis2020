@@ -126,10 +126,6 @@ function Isosurfaces(volume, isovalue) {
         return index;
     }
 
-    function interpolated_vertex(v0, v1, s) {
-        return new THREE.Vector3().addVectors(v0, v1).divideScalar(2);
-    }
-
     function interpolated_vertex(v0, v1) {
         var lines = volume.resolution.x;
         var slices = volume.resolution.x * volume.resolution.y;
@@ -142,7 +138,7 @@ function Isosurfaces(volume, isovalue) {
 
         var dis01 = v0.distanceToSquared(v1);
         var dis0i = dis01 * (isovalue - s0) / (s1 - s0);
-        var v01 = new THREE.Vector3().subVectors(v1 - v0);
+        var v01 = v1.sub(v0);
         var v0i = v01.multiplyScalar(dis0i / dis01);
         var vi = new THREE.Vector3().addVectors(v0, v0i);
         return vi;
