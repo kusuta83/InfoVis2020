@@ -47,16 +47,16 @@ function Isosurfaces(volume, isovalue) {
                     var v4 = new THREE.Vector3(x + vid4[0], y + vid4[1], z + vid4[2]);
                     var v5 = new THREE.Vector3(x + vid5[0], y + vid5[1], z + vid5[2]);
 
-                    var s0 = volume.values[vid0][0];
-                    var s1 = volume.values[vid1][0];
-                    var s2 = volume.values[vid2][0];
-                    var s3 = volume.values[vid3][0];
-                    var s4 = volume.values[vid4][0];
-                    var s5 = volume.values[vid5][0];
+                    // var s0 = volume.values[vid0][0];
+                    // var s1 = volume.values[vid1][0];
+                    // var s2 = volume.values[vid2][0];
+                    // var s3 = volume.values[vid3][0];
+                    // var s4 = volume.values[vid4][0];
+                    // var s5 = volume.values[vid5][0];
 
-                    var v01 = interpolated_vertex(v0, v1, s0, s1);
-                    var v23 = interpolated_vertex(v2, v3, s2, s3);
-                    var v45 = interpolated_vertex(v4, v5, s4, s5);
+                    var v01 = interpolated_vertex(v0, v1);
+                    var v23 = interpolated_vertex(v2, v3);
+                    var v45 = interpolated_vertex(v4, v5);
 
                     geometry.vertices.push(v01);
                     geometry.vertices.push(v23);
@@ -130,7 +130,16 @@ function Isosurfaces(volume, isovalue) {
         return new THREE.Vector3().addVectors(v0, v1).divideScalar(2);
     }
 
-    function interpolated_vertex(v0, v1, s0, s1) {
+    function interpolated_vertex(v0, v1) {
+        var lines = volume.resolution.x;
+        var slices = volume.resolution.x * volume.resolution.y;
+
+        var id0 = v0.x + (v0.y * lines) + (v0.z * slices);
+        var s0 = volume.values[id0][0];
+
+        var id1 = v1.x + (v1.y * lines) + (v1.z * slices);
+        var s1 = volume.values[id1][0];
+
         var dis01 = v0.distanceToSquared(v1);
         var dis0i = dis01 * (isovalue - s0) / (s1 - s0);
         var v01 = new THREE.Vector3().subVectors(v1 - v0);
