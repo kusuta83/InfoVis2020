@@ -13,7 +13,7 @@ function main()
     screen.scene.add( bounds );
 
     var material = new THREE.ShaderMaterial({
-        vertexColors: THREE.VertexColors,
+        //vertexColors: THREE.VertexColors,
         vertexShader: document.getElementById('phong.vert').text,
         fragmentShader: document.getElementById('phong.frag').text,
         uniforms: {
