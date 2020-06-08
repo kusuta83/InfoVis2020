@@ -137,7 +137,7 @@ function Isosurfaces(volume, isovalue) {
         var s1 = volume.values[id1][0];
 
         var w0 = v0.multiplyScalar(s1 - isovalue);
-        var w1 = v1.multiplyScalar(isovalue - s);
+        var w1 = v1.multiplyScalar(isovalue - s0);
         return new THREE.Vector3().addVectors(w0, w1).divideScalar(s1 - s0);
         // var dis01 = v0.distanceToSquared(v1);
         // var dis0i = dis01 * (isovalue - s0) / (s1 - s0);
