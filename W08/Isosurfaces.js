@@ -60,11 +60,6 @@ function Isosurfaces(volume, isovalue) {
                     var id2 = counter++;
                     geometry.faces.push(new THREE.Face3(id0, id1, id2));
 
-                    // Assign colors for each vertex
-                    var c = new THREE.Color().setHex( cmap[ scalarsToIndex(isovalue) ][1] );
-                    geometry.faces[geometry.faces.length()-1].vertexColors.push(c);
-                    geometry.faces[geometry.faces.length()-1].vertexColors.push(c);
-                    geometry.faces[geometry.faces.length()-1].vertexColors.push(c);
                 }
             }
             cell_index++;
@@ -74,7 +69,7 @@ function Isosurfaces(volume, isovalue) {
 
     geometry.computeVertexNormals();
 
-    material.color = new THREE.Color("white");
+    material.color = new THREE.Color().setHex( cmap[ scalarsToIndex(isovalue) ][1] );
 
     return new THREE.Mesh(geometry, material);
 
