@@ -98,9 +98,9 @@ function TransferFunctionTexture() {
     var data = new Float32Array(width * height * 4);
     for (var i = 0; i < resolution; i++) {
         var S = i / 255.0; // [0,1]
-        var R = 1.0;
-        var G = 0;
-        var B = 0;
+        var R = 0.0;
+        var G = 0.0;
+        var B = 0.0;
         // var G = Math.max(1.0 - S, 0.0);
         // var B = Math.max(1.0 - S, 0.0);
         var color = new THREE.Color(R, G, B);
