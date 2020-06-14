@@ -82,22 +82,27 @@ function VolumeTexture(volume) {
 
 function TransferFunctionTexture() {
     // Create color map
-    var cmap = [];
-    for (var i = 0; i < 256; i++) {
-        var S = i / 255.0; // [0,1]
-        var R = 1.0;
-        var G = Math.max(1.0 - S, 0.0);
-        var B = Math.max(1.0 - S, 0.0);
-        var color = new THREE.Color(R, G, B);
-        cmap.push([S, '0x' + color.getHexString()]);
-    }
+    // var cmap = [];
+    // for (var i = 0; i < 256; i++) {
+    //     var S = i / 255.0; // [0,1]
+    //     var R = 1.0;
+    //     var G = Math.max(1.0 - S, 0.0);
+    //     var B = Math.max(1.0 - S, 0.0);
+    //     var color = new THREE.Color(R, G, B);
+    //     cmap.push([S, '0x' + color.getHexString()]);
+    // }
 
     var resolution = 256;
     var width = resolution;
     var height = 1;
     var data = new Float32Array(width * height * 4);
     for (var i = 0; i < resolution; i++) {
-        var color = cmap(0, 255, i);
+        var S = i / 255.0; // [0,1]
+        var R = 1.0;
+        var G = Math.max(1.0 - S, 0.0);
+        var B = Math.max(1.0 - S, 0.0);
+        var color = new THREE.Color(R, G, B);
+        // var color = KVS.RainbowColorMap( 0, 255, i );
         var alpha = i / 255.0;
         data[4 * i + 0] = color.x;
         data[4 * i + 1] = color.y;
