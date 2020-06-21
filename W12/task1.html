@@ -42,7 +42,7 @@ I compare two points.
 
         // set the parameters for the histogram
         var histogram = d3.histogram()
-            .value(function (d) { return d.price; })   // I need to give the vector of value
+            .value(function (d) { return d.attribution; })   // I need to give the vector of value
             .domain(x.domain())  // then the domain of the graphic
             .thresholds(x.ticks(70)); // then the numbers of bins
 
