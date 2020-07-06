@@ -1,4 +1,4 @@
-var model = "Lambert";
+var model = 0; // 0:Lambert, 1: Phong, 2: BlinnPhong, 3: Cook
 var ka = 0.3;
 var kd = 0.5;
 var ks = 0.8;
@@ -126,6 +126,10 @@ function TransferFunctionTexture() {
 }
 
 function main() {
+    // console.log("ka: " + ka);
+    // console.log("F0: " + F0);
+    // console.log("model: " + model);
+        
     var volume = new KVS.LobsterData();
     var screen = new KVS.THREEScreen();
 
@@ -184,13 +188,13 @@ function main() {
             light_position: { type: 'v3', value: screen.light.position },
             camera_position: { type: 'v3', value: screen.camera.position },
             background_color: { type: 'v3', value: new THREE.Vector3().fromArray(screen.renderer.getClearColor().toArray()) },
-            reflection_model: { type: 'string', value: model},
-            ka: { type: 'float', value: ka},
-            kd: { type: 'float', value: kd},
-            ks: { type: 'float', value: ks},
-            n: {type: 'float', value: n},
-            m: {type: 'float', value: m},
-            F0: {type: 'float', value: F0}
+            reflection_model: { type: 'i', value: model},
+            ka: { type: 'f', value: ka},
+            kd: { type: 'f', value: kd},
+            ks: { type: 'f', value: ks},
+            n: {type: 'f', value: n},
+            m: {type: 'f', value: m},
+            F0: {type: 'f', value: F0},
         }
     });
 
