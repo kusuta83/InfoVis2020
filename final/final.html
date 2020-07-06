@@ -1,37 +1,66 @@
+<!DOCTYPE html>
 <html>
-<meta charset="utf-8">
 
 <head>
 	<title>Final</title>
-	<style> div.overview{
-		background: #dcdcdc;
-		width: 100%;
-		padding: 20px;
-	} </style>
+	<meta charset="utf-8">
+	<style>
+		div.overview {
+			background: #dcdcdc;
+			width: 100%;
+			padding: 20px;
+		}
+	</style>
 </head>
 
-<div class = "overview">
-	<h1>概要</h1>
-	<p> 
-		リフレクションモデルとそのパラメーターを変更できるようにした。<br>
-		右側のUIから変更することができ、Applyを押すとそれが適用される。
-	</p>
-</div>
 
-<div id="display" style="width: 80%; float: left;"></div>
-<div id="controller" style="width:15%; float: right;">
-	<label id="label" style="font-family:Arial;"></label>
-	<input type="range" min="0" max="1" step="0.01" value="0.5" id="isovalue" />
-	<button id="change-isovalue-button" style="font-family:Arial;">
-		Apply</button>
-</div>
 
 <body style="margin:0">
+	<div class="overview">
+		<h1>概要</h1>
+		<p>
+			リフレクションモデルとそのパラメーターを変更できるようにした。<br>
+			右側のUIから変更することができ、Applyを押すとそれが適用される。
+		</p>
+	</div>
+
+	<div id="display" style="width: 80%; float: left;"></div>
+	<div id="controller" style="width:15%; float: right;">
+		<label id="label" style="font-family:Arial;"></label>
+		<!-- <input type="range" min="0" max="1" step="0.01" value="0.5" id="isovalue" /> -->
+		<p>Reflection Model</p>
+		<select id="target" multiple size="4">
+			<option>Lambert
+			<option>Phong
+			<option>BlinnPhong
+			<option>CookTorranece
+		</select>
+
+		<p>Parameters</p>
+		ka:
+		<input id="ka" type="number" value="0.3" /><br>
+		kd:
+		<input id="kd" type="number" value="0.5" /><br>
+		ks:
+		<input id="ks" type="number" value="0.8" /><br>
+		n:
+		<input id="n" type="number" value="50.0" /><br>
+		m:
+		<input id="m" type="number" value="0.2" /><br>
+		F0:
+		<input id="F0" type="number" value="0.2" /><br>
+
+		<button id="change-isovalue-button" style="font-family:Arial;" onclick="apply()">
+			Apply</button>
+	</div>
+
 	<script src="three.min.js"></script>
 	<script src="TrackballControls.js"></script>
 	<script src="https://naohisas.github.io/KVS.js/Build/KVS.min.js"></script>
 	<script src="https://naohisas.github.io/KVS.js/Build/KVS2THREE.min.js"></script>
 	<script src="https://naohisas.github.io/KVS.js/Source/KVSLobsterData.js"></script>
+	<script src="Lut.js"></script>
+	<script src="gui.js"></script>
 
 	<script type="x-shader/x-vertex" id="bounding.vert">
 	 varying vec4 position_obj;
@@ -76,6 +105,13 @@
 	 uniform vec3 light_position;
 	 uniform vec3 camera_position;
 	 uniform vec3 background_color;
+	 uniform string reflection_model;
+	 uniform float ka;
+	 uniform float kd;
+	 uniform float ks;
+	 uniform float n;
+	 uniform float m;
+	 uniform float F0;
 
 	 vec4 LookupTexture2D( sampler2D texture, vec2 index )
 	 {
@@ -117,8 +153,8 @@
 
 	 vec3 LambertianReflection( vec3 C, vec3 L, vec3 N )
 	 {
-	     float ka = 0.3;
-	     float kd = 0.5;
+	     <!-- float ka = 0.3; -->
+	     <!-- float kd = 0.5; -->
 
 //	     float dd = dot( N, L );
 	     float dd = max( dot( N, L ), 0.0 );
@@ -129,10 +165,10 @@
 
 	 vec3 PhongReflection( vec3 C, vec3 L, vec3 N, vec3 V )
 	 {
-	     float ka = 0.3;
+	     <!-- float ka = 0.3;
 	     float kd = 0.5;
 	     float ks = 0.8;
-	     float n = 50.0;
+	     float n = 50.0; -->
 
 	     vec3 R = reflect( -L, N );
 //	     float dd = dot( N, L );
@@ -152,10 +188,10 @@
 
 	 vec3 BlinnPhongReflection( vec3 C, vec3 L, vec3 N, vec3 V )
 	 {
-	     float ka = 0.7;
+	     <!-- float ka = 0.7;
 	     float kd = 0.5;
 	     float ks = 0.8;
-	     float n = 50.0;
+	     float n = 50.0; -->
 
 	     vec3 H = normalize( L + V );
 //	     float dd = dot( N, L );
@@ -175,11 +211,11 @@
 
 	 vec3 CookTorranceReflection( vec3 C, vec3 L, vec3 N, vec3 V )
 	 {
-	     float ka = 0.3;
+	     <!-- float ka = 0.3;
 	     float kd = 0.5;
 	     float ks = 0.8;
 	     float m = 0.2; // roughness. [0:smooth, 1:rough]
-	     float F0 = 0.2;
+	     float F0 = 0.2; -->
 
 //	     float dd = dot( N, L );
 	     float dd = max( dot( N, L ), 0.0 );
@@ -258,8 +294,23 @@
 
 		     vec3 V = normalize( camera_position - position );
 //		     c.rgb = PhongReflection( c.rgb, L, N, V );
-		     c.rgb = BlinnPhongReflection( c.rgb, L, N, V );
+//		     c.rgb = BlinnPhongReflection( c.rgb, L, N, V );
 //		     c.rgb = CookTorranceReflection( c.rgb, L, N, V );
+
+			switch (reflection_model){
+				case "Lambert":
+					c.rgb = LambertianReflection(c.rgb, L, N);
+					break;
+				case "Phong":
+					c.rgb = PhongReflection( c.rgb, L, N, V );
+					break;
+				case "BlinnPhong":
+					c.rgb = BlinnPhongReflection( c.rgb, L, N, V );
+					break;
+				case "CookTorranece":
+					c.rgb = CookTorranceReflection( c.rgb, L, N, V );
+					break;
+			}
 
 		     // Front-to-back composition.
 		     color.rgb += ( 1.0 - color.a ) * c.a * c.rgb;
