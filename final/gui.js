@@ -13,5 +13,5 @@ function apply() {
     const F0 = document.getElementById("F0").value;
     
     setParameters(model, ka, kd, ks, n, m, F0);
-    main();
+    
 }

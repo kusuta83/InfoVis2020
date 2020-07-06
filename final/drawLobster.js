@@ -201,6 +201,36 @@ function main() {
     var raycaster_mesh = new THREE.Mesh(bounding_geometry, raycaster_material);
     screen.scene.add(raycaster_mesh);
 
+    document.getElementById('change-isovalue-button').addEventListener('click', function(){
+        //delete previous model, and make new model
+        screen.scene.remove(raycaster_mesh);
+
+        apply();
+        var raycaster_material = new THREE.ShaderMaterial({
+            vertexShader: document.getElementById('raycaster.vert').textContent,
+            fragmentShader: document.getElementById('raycaster.frag').textContent,
+            side: THREE.FrontSide,
+            uniforms: {
+                volume_resolution: { type: "v3", value: volume.resolution },
+                exit_points: { type: "t", value: exit_texture },
+                volume_data: { type: "t", value: volume_texture },
+                transfer_function_data: { type: "t", value: transfer_function_texture },
+                light_position: { type: 'v3', value: screen.light.position },
+                camera_position: { type: 'v3', value: screen.camera.position },
+                background_color: { type: 'v3', value: new THREE.Vector3().fromArray(screen.renderer.getClearColor().toArray()) },
+                reflection_model: { type: 'i', value: model},
+                ka: { type: 'f', value: ka},
+                kd: { type: 'f', value: kd},
+                ks: { type: 'f', value: ks},
+                n: {type: 'f', value: n},
+                m: {type: 'f', value: m},
+                F0: {type: 'f', value: F0},
+            }
+        });
+        var raycaster_mesh = new THREE.Mesh(bounding_geometry, raycaster_material);
+        screen.scene.add(raycaster_mesh);
+    })
+
     document.addEventListener('mousemove', function () {
         screen.light.position.copy(screen.camera.position);
     });
