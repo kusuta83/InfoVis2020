@@ -5,6 +5,7 @@ var ks = 0.8;
 var n = 50.0;
 var m = 0.2;
 var F0 = 0.2;
+var color_num = 0;
 
 function setParameters(reflectionModel, f1, f2, f3, f4, f5, f6) {
     model = reflectionModel;
@@ -14,6 +15,10 @@ function setParameters(reflectionModel, f1, f2, f3, f4, f5, f6) {
     n = f4;
     m = f5;
     F0 = f6;
+}
+
+function setColorMap(c) {
+    color_num = c;
 }
 
 function BoundingBoxGeometry(volume) {
@@ -103,13 +108,32 @@ function TransferFunctionTexture() {
     var width = resolution;
     var height = 1;
     var data = new Float32Array(width * height * 4);
-    for (var i = 0; i < resolution; i++) {
-        var color = KVS.RainbowColorMap(0, 255, i);
-        var alpha = i / 255.0;
-        data[4 * i + 0] = color.x;
-        data[4 * i + 1] = color.y;
-        data[4 * i + 2] = color.z;
-        data[4 * i + 3] = alpha;
+    switch (color_num) {
+        case 0:
+            for (var i = 0; i < resolution; i++) {
+                var color = KVS.RainbowColorMap(0, 255, i);
+                var alpha = i / 255.0;
+                data[4 * i + 0] = color.x;
+                data[4 * i + 1] = color.y;
+                data[4 * i + 2] = color.z;
+                data[4 * i + 3] = alpha;
+            }
+            break;
+        case 1:
+            for (var i = 0; i < resolution; i++) {
+                var S = i / 255.0; // [0,1]
+                var R = 1.0;
+                var G = Math.max(1.0 - S, 0.0);
+                var B = Math.max(1.0 - S, 0.0);
+                var alpha = i / 255.0;
+                data[4 * i + 0] = R;
+                data[4 * i + 1] = G;
+                data[4 * i + 2] = B;
+                data[4 * i + 3] = alpha;
+            }
+            break;
+        default:
+            break;
     }
 
     var format = THREE.RGBAFormat;
@@ -129,7 +153,7 @@ function main() {
     // console.log("ka: " + ka);
     // console.log("F0: " + F0);
     // console.log("model: " + model);
-        
+
     var volume = new KVS.LobsterData();
     var screen = new KVS.THREEScreen();
 
@@ -188,24 +212,25 @@ function main() {
             light_position: { type: 'v3', value: screen.light.position },
             camera_position: { type: 'v3', value: screen.camera.position },
             background_color: { type: 'v3', value: new THREE.Vector3().fromArray(screen.renderer.getClearColor().toArray()) },
-            reflection_model: { type: 'i', value: model},
-            ka: { type: 'f', value: ka},
-            kd: { type: 'f', value: kd},
-            ks: { type: 'f', value: ks},
-            n: {type: 'f', value: n},
-            m: {type: 'f', value: m},
-            F0: {type: 'f', value: F0},
+            reflection_model: { type: 'i', value: model },
+            ka: { type: 'f', value: ka },
+            kd: { type: 'f', value: kd },
+            ks: { type: 'f', value: ks },
+            n: { type: 'f', value: n },
+            m: { type: 'f', value: m },
+            F0: { type: 'f', value: F0 },
         }
     });
 
     var raycaster_mesh = new THREE.Mesh(bounding_geometry, raycaster_material);
     screen.scene.add(raycaster_mesh);
 
-    document.getElementById('change-isovalue-button').addEventListener('click', function(){
+    document.getElementById('change-isovalue-button').addEventListener('click', function () {
         //delete previous model, and make new model
         screen.scene.remove(raycaster_mesh);
 
         apply();
+        transfer_function_texture = TransferFunctionTexture();
         var raycaster_material = new THREE.ShaderMaterial({
             vertexShader: document.getElementById('raycaster.vert').textContent,
             fragmentShader: document.getElementById('raycaster.frag').textContent,
@@ -218,13 +243,13 @@ function main() {
                 light_position: { type: 'v3', value: screen.light.position },
                 camera_position: { type: 'v3', value: screen.camera.position },
                 background_color: { type: 'v3', value: new THREE.Vector3().fromArray(screen.renderer.getClearColor().toArray()) },
-                reflection_model: { type: 'i', value: model},
-                ka: { type: 'f', value: ka},
-                kd: { type: 'f', value: kd},
-                ks: { type: 'f', value: ks},
-                n: {type: 'f', value: n},
-                m: {type: 'f', value: m},
-                F0: {type: 'f', value: F0},
+                reflection_model: { type: 'i', value: model },
+                ka: { type: 'f', value: ka },
+                kd: { type: 'f', value: kd },
+                ks: { type: 'f', value: ks },
+                n: { type: 'f', value: n },
+                m: { type: 'f', value: m },
+                F0: { type: 'f', value: F0 },
             }
         });
         var raycaster_mesh = new THREE.Mesh(bounding_geometry, raycaster_material);

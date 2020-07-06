@@ -3,7 +3,6 @@ function apply() {
     var model = document.selbox.target.selectedIndex;
     // console.log(model);
 
-
     //input parameter
     const ka = document.getElementById("ka").value;
     const kd = document.getElementById("kd").value;
@@ -13,5 +12,10 @@ function apply() {
     const F0 = document.getElementById("F0").value;
     
     setParameters(model, ka, kd, ks, n, m, F0);
+
+
+    //select color map
+    const c = document.selbox.color.selectedIndex;
+    setColorMap(c);
     
 }
